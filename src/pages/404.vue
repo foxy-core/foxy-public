@@ -1,0 +1,20 @@
+<template>
+  <div class="flex flex-col items-center space-y-4">
+    <img src="~/assets/fox-gif-404.gif" />
+    <h1 class="text-2xl text-gray-800">Такой страницы нет</h1>
+    <p class="text-gray-600">
+      Зато ты можешь найти свою вторую половинку ヽ(*・ω・)ﾉ
+    </p>
+
+    <UiBaseButton tag="a" href="/" variant="warning">
+      <template #icon>
+        <SearchIcon class="w-5 h-5" />
+      </template>
+      Найти!
+    </UiBaseButton>
+  </div>
+</template>
+
+<script setup lang="ts">
+import SearchIcon from "~icons/heroicons-outline/search";
+</script>

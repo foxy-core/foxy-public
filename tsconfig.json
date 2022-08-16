@@ -1,0 +1,6 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "types": ["vite-svg-loader", "unplugin-icons/types/vue"]
+  }
+}
