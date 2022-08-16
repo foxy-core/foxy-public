@@ -55,31 +55,31 @@
 </template>
 
 <script setup lang="ts">
-export interface ButtonProps {
-  variant?: "primary" | "secondary" | "error" | "warning" | "success";
-  tag?: "a" | "div" | "button";
-  shadow?: boolean;
-  center?: boolean;
-  padding?: boolean;
-  outline?: boolean;
-  semitransparent?: boolean;
-  circle?: boolean;
-}
+  export interface ButtonProps {
+    variant?: 'primary' | 'secondary' | 'error' | 'warning' | 'success'
+    tag?: 'a' | 'div' | 'button'
+    shadow?: boolean
+    center?: boolean
+    padding?: boolean
+    outline?: boolean
+    semitransparent?: boolean
+    circle?: boolean
+  }
 
-withDefaults(defineProps<ButtonProps>(), {
-  variant: "primary",
-  tag: "button",
-  shadow: true,
-  center: true,
-  padding: true,
-  outline: false,
-  semitransparent: false,
-  circle: false,
-});
+  withDefaults(defineProps<ButtonProps>(), {
+    variant: 'primary',
+    tag: 'button',
+    shadow: true,
+    center: true,
+    padding: true,
+    outline: false,
+    semitransparent: false,
+    circle: false,
+  })
 </script>
 
 <style>
-:root {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+  :root {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
 </style>

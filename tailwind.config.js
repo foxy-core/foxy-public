@@ -1,13 +1,13 @@
 module.exports = {
-  content: ["src/**/*.{vue,ts,js}"],
+  content: ['src/**/*.{vue,ts,js}'],
   theme: {
     extend: {
       screens: {
-        "media-hover": {
-          raw: "(hover: hover)",
+        'media-hover': {
+          raw: '(hover: hover)',
         },
       },
     },
   },
   plugins: [],
-};
+}

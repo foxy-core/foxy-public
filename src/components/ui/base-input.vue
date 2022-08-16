@@ -23,17 +23,17 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  label?: string;
-  modelValue?: string;
-  id?: string;
-  type?: string;
-}>();
+  defineProps<{
+    label?: string
+    modelValue?: string
+    id?: string
+    type?: string
+  }>()
 
-const emit = defineEmits<{
-  (name: "update:modelValue", newValue: string): void;
-}>();
+  const emit = defineEmits<{
+    (name: 'update:modelValue', newValue: string): void
+  }>()
 
-const onInput = (event: Event) =>
-  emit("update:modelValue", (event.target as HTMLInputElement)?.value);
+  const onInput = (event: Event) =>
+    emit('update:modelValue', (event.target as HTMLInputElement)?.value)
 </script>

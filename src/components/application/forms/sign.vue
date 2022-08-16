@@ -11,5 +11,5 @@
 </template>
 
 <script setup lang="ts">
-import LoginIcon from "~icons/heroicons-outline/login";
+  import LoginIcon from '~icons/heroicons-outline/login'
 </script>
