@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center space-y-4 text-center">
-    <img src="~/assets/fox-gif-404.gif" :width="460" :height="336" />
+    <img src="~/assets/fox-gif-404.gif" :width="232" :height="176" />
     <h1 class="text-lg md:text-2xl text-gray-800">Такой страницы нет</h1>
     <p class="text-sm md:text-base text-gray-600">
       Зато ты можешь найти свою вторую половинку

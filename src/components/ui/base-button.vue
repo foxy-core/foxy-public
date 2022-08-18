@@ -41,20 +41,24 @@
           },
     ]"
   >
-    <template v-if="!!$slots.icon">
+    <template v-if="!!$slots.icon && !isLoading">
       <div class="h-5 w-5" :class="{ 'mr-3': !circle }">
         <slot name="icon"></slot>
       </div>
       <slot></slot>
     </template>
 
-    <template v-else>
+    <template v-else-if="!isLoading">
       <slot></slot>
     </template>
+
+    <CubeIcon class="w-6 h-6 animate-spin" v-else />
   </component>
 </template>
 
 <script setup lang="ts">
+  import CubeIcon from '~icons/heroicons-outline/cube-transparent'
+
   export interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'error' | 'warning' | 'success'
     tag?: 'a' | 'div' | 'button'
@@ -64,6 +68,7 @@
     outline?: boolean
     semitransparent?: boolean
     circle?: boolean
+    isLoading?: boolean
   }
 
   withDefaults(defineProps<ButtonProps>(), {
