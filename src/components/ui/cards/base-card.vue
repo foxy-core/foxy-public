@@ -1,26 +1,21 @@
 <template>
-  <div class="rounded-xl max-w-xl max-h-[75vh] relative mx-auto custom-scroll shadow-2xl">
-    <div v-for="item in cards">
-      <UiCardsCardExample :name="item.name" :age="item.age" :images="item.images" />
-    </div>
+  <div class="rounded-xl bg-white z-10 max-w-xl max-h-[75vh] relative mx-auto custom-scroll shadow-2xl">
+    <UiCardsCardExample :name="card.name" :age="card.age" :images="card.images" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const cards = ref([
-  {
-    name: 'Margo',
-    age: 66,
-    images: ['/assets/dummy/margo.jpeg', '/assets/dummy/ryan.jpg']
-  },
-  {
-    name: 'Ryan',
-    age: 23,
-    images: ['/assets/dummy/ryan.jpg', '/assets/dummy/margo.jpeg']
-  }
-])
+const props = defineProps<{
+  name: string,
+  age: number,
+  images: string[]
+}>()
+
+const card = ref({
+  ...props
+})
 
 </script>
 
