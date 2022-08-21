@@ -2,9 +2,9 @@ import { NuxtApp } from '#app'
 
 export const INFINITE_MAX_AGE = 31536000
 
-const getCookieFrom = (cookieName: string) => (cookieString: string) =>
+const getCookieFrom = (cookieName?: string) => (cookieString: string) =>
   cookieString
-    .split('; ')
+    ?.split('; ')
     .find(row => row.startsWith(`${cookieName}=`))
     ?.split('=')[1]
 
