@@ -4,7 +4,7 @@
     @submit.prevent="submitForm"
   >
     <UiBaseTypography class="text-center">
-      <h1>Регистрация</h1>
+      <h1>Вход</h1>
     </UiBaseTypography>
 
     <UiBaseInput
@@ -16,23 +16,18 @@
     <UiBaseInput
       label="Пароль"
       type="password"
-      autocomplete="new-password"
+      autocomplete="current-password"
       v-bind="inputs.password.value"
-    />
-    <UiBaseInput
-      label="Подтвердите пароль"
-      type="password"
-      v-bind="inputs.confirmPassword.value"
     />
 
     <UiBaseButton variant="warning" :is-loading="isLoading">
       <template #icon><LoginIcon class="w-5 h-5" /></template>
-      Зарегистрироваться
+      Войти
     </UiBaseButton>
 
     <RouterLink
       custom
-      :to="{ name: 'auth-sign-in' }"
+      :to="{ name: 'auth-sign-up' }"
       v-slot="{ href, navigate }"
     >
       <UiBaseButton
@@ -42,7 +37,7 @@
         :href="href"
         @click="navigate"
       >
-        Я уже зарегистрирован
+        У меня нет аккаунта
       </UiBaseButton>
     </RouterLink>
   </form>
@@ -50,19 +45,14 @@
 
 <script setup lang="ts">
   import LoginIcon from '~icons/heroicons-outline/login'
-  import {
-    confirmPasswordValidator,
-    emailValidator,
-    passwordValidator,
-  } from '~/_app/domain/accounts'
-  import { useSignUp } from '~/_app/use-cases/auth'
+  import { emailValidator, passwordValidator } from '~/_app/domain/accounts'
+  import { useSignIn } from '~/_app/use-cases/auth'
 
-  const signUp = useSignUp()
+  const signIn = useSignIn()
 
   const { inputs, submitForm, isLoading, state } = useForm<{
     email: string
     password: string
-    confirmPassword: string
   }>({
     fields: {
       email: {
@@ -71,12 +61,9 @@
       password: {
         validator: passwordValidator,
       },
-      confirmPassword: {
-        validator: confirmPasswordValidator,
-      },
     },
     onSubmitted: async () => {
-      await signUp({
+      await signIn({
         email: state.value.email,
         password: state.value.password,
       })

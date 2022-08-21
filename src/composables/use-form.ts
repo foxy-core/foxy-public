@@ -1,11 +1,8 @@
-import { SafeParseError, ZodObject, ZodSchema } from 'zod'
 import { ValidationStatus, Validator } from '~/_app/domain/validation'
 
 type Form<Obj> = {
   [key in keyof Obj]: {
-    // schema: ZodSchema
     initialValue?: Obj[key]
-    schema?: ZodSchema
     validator?: Validator<Obj[key], Obj>
   }
 }
@@ -42,6 +39,7 @@ export const useForm = <T>({ onSubmitted, fields }: FormOptions<T>) => {
   return {
     submitForm,
     isLoading,
+    state: computed(() => state),
     inputs: Object.fromEntries(
       Object.entries<Form<T>[keyof T]>(fields).map(
         ([key, { initialValue, validator }]) => {

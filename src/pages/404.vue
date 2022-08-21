@@ -18,8 +18,13 @@
 
 <script setup lang="ts">
   import SearchIcon from '~icons/heroicons-outline/search'
+  import { PageAuthRequirements } from '~/_app/domain/auth'
 
   useHead({
     title: 'Не найдено',
+  })
+
+  definePageMeta({
+    auth: PageAuthRequirements.Whatever,
   })
 </script>
