@@ -2,7 +2,7 @@
   <component
     :is="tag"
     class="group relative h-12 select-none overflow-hidden transition-all duration-100 active:translate-y-0.5 active:shadow-none cursor-pointer touch-manipulation"
-    ontouchstart=""
+    @touchstart.passive=""
     :class="[
       {
         'flex items-center justify-center': center,

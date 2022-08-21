@@ -1,86 +1,29 @@
 <template>
   <div>
     <UiBaseTypography class="text-center">
-      <h1>Поздравляем!</h1>
+      <h1>Ваш профиль</h1>
 
-      <p>Вы авторизованы и теперь можете творить любую дичь.</p>
-
-      <blockquote>
-        Проскролль и зацени какая красивая верхняя панелька
-      </blockquote>
-
-      <img
-        src="~/assets/fox-gif-404.gif"
-        :width="232"
-        :height="176"
-        class="inline"
-      />
-
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
+      <p v-if="data?.status === PokeResponseStatus.Rejected">
+        У вас нет профиля :(
       </p>
 
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
-      </p>
-
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
-      </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
-      </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
-      </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
-      </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
-      </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas corporis
-        mollitia laboriosam tempore amet quia. Provident ipsum eligendi culpa
-        aliquam consequatur est, molestiae nostrum explicabo praesentium
-        temporibus in laborum doloribus.
+      <p v-else-if="data">
+        {{ data?.result.name }}
       </p>
     </UiBaseTypography>
 
-    <UiBaseButton class="mt-6 mx-auto" @click="signOut">Выйти :(</UiBaseButton>
+    <UiBaseButton class="mt-6 mx-auto" @click="signOut(true)"
+      >Выйти :(</UiBaseButton
+    >
   </div>
 </template>
 
 <script setup lang="ts">
-  const authCookie = useCookie('auth')
+  import { useSignOut } from '~/_app/use-cases/auth'
+  import { useMyProfile } from '~/_app/use-cases/profile'
+  import { PokeResponseStatus } from '~/_app/common/poke'
 
-  const goToSignUp = () => navigateTo('/sign-up')
+  const signOut = useSignOut()
 
-  if (!authCookie.value) goToSignUp()
-
-  const signOut = () => {
-    authCookie.value = undefined
-    goToSignUp()
-  }
+  const { data } = useMyProfile()
 </script>

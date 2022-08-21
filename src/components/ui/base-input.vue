@@ -5,6 +5,7 @@
       :id="id"
       :placeholder="label || 'Input'"
       :value="modelValue"
+      :autocomplete="autocomplete"
       @input="onInput"
       :type="type"
       :class="[
@@ -48,7 +49,7 @@
 <script setup lang="ts">
   import ExclamationIcon from '~icons/heroicons-outline/exclamation'
 
-  import { ValidationStatus } from '~/_app/domain/validation/validation-status'
+  import { ValidationStatus } from '~/_app/domain/validation'
 
   defineProps<{
     label?: string
@@ -58,6 +59,7 @@
     errorString?: string
     validationStatus?: ValidationStatus
     requirementNotSatisfied?: boolean
+    autocomplete?: string
   }>()
 
   const emit = defineEmits<{
