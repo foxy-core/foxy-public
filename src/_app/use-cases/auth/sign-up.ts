@@ -1,13 +1,9 @@
-import {
-  useAccessToken,
-  useClientId,
-  useRefreshToken,
-} from '~/composables/auth/auth-cookies'
 import { PokeResponseStatus } from '~/_app/common/poke'
 import { Email, Password } from '~/_app/domain/accounts'
 import { NotificationStatus } from '~/_app/domain/notifications'
 import { notify } from '~/_app/use-cases/notifications'
 import { usePokeApi } from '~/composables/use-poke-api'
+import { useCredentialsStore } from '../../stores/credentials.store'
 
 type SignUpInput = {
   email: Email
@@ -15,9 +11,7 @@ type SignUpInput = {
 }
 
 export const useSignUp = () => {
-  const accessToken = useAccessToken()
-  const refreshToken = useRefreshToken()
-  const clientId = useClientId()
+  const credentials = useCredentialsStore()
 
   const pokeApi = usePokeApi()
 
@@ -25,7 +19,7 @@ export const useSignUp = () => {
     const result = await pokeApi.auth.signUp({
       input: {
         ...input,
-        clientId: clientId.value,
+        clientId: credentials.clientId,
         strategy: 'local',
       },
     })
@@ -33,8 +27,8 @@ export const useSignUp = () => {
     if (result.status === PokeResponseStatus.Resolved) {
       navigateTo('/')
 
-      refreshToken.value = result.result.refreshToken
-      accessToken.value = result.result.token
+      credentials.refreshToken = result.result.refreshToken
+      credentials.accessToken = result.result.token
       return
     }
 

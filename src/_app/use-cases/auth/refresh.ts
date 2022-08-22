@@ -1,17 +1,11 @@
-import {
-  useAccessToken,
-  useRefreshToken,
-  useTokenValidity,
-} from '~/composables/auth/auth-cookies'
 import { PokeResponseStatus } from '~/_app/common/poke'
 import { exists } from '~/_app/common/guards'
 import { createFoxyPokeClient } from '~/_app/infrastructure/foxy-poke-api'
 import { useSignOut } from './sign-out'
+import { useCredentialsStore } from '../../stores/credentials.store'
 
 export const useRefresh = () => {
-  const tokenValidity = useTokenValidity()
-  const accessToken = useAccessToken()
-  const refreshToken = useRefreshToken()
+  const credentials = useCredentialsStore()
 
   const signOut = useSignOut()
 
@@ -20,15 +14,15 @@ export const useRefresh = () => {
   const pokeApi = createFoxyPokeClient()
 
   return async () => {
-    if (!exists(accessToken.value) && !exists(refreshToken.value)) {
+    if (!exists(credentials.accessToken) && !exists(credentials.refreshToken)) {
       return
     }
 
-    if (exists(tokenValidity.value)) {
+    if (exists(credentials.tokenValidity)) {
       return
     }
 
-    if (!exists(accessToken.value) || !exists(refreshToken.value)) {
+    if (!exists(credentials.accessToken) || !exists(credentials.accessToken)) {
       return signOut()
     }
 
@@ -37,8 +31,8 @@ export const useRefresh = () => {
     const response = await pokeApi.auth.signIn({
       input: {
         strategy: 'refreshToken',
-        oldAccessToken: accessToken.value,
-        refreshToken: refreshToken.value,
+        oldAccessToken: credentials.accessToken,
+        refreshToken: credentials.refreshToken,
       },
     })
 
@@ -46,8 +40,8 @@ export const useRefresh = () => {
       return signOut()
     }
 
-    accessToken.value = response.result.token
-    refreshToken.value = response.result.refreshToken
-    tokenValidity.value = true
+    credentials.accessToken = response.result.token
+    credentials.refreshToken = response.result.refreshToken
+    credentials.tokenValidity = true
   }
 }

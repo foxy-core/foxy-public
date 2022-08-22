@@ -7,11 +7,7 @@
 <script setup lang="ts">
   import { usePokeApi } from '~/composables/use-poke-api'
   import { useRefresh } from '~/_app/use-cases/auth/refresh'
-  import {
-    useAccessToken,
-    useTokenValidity,
-  } from './composables/auth/auth-cookies'
-  import { useSignOut } from './_app/use-cases/auth/sign-out'
+  import { useCredentialsStore } from './_app/stores/credentials.store'
 
   useHead({
     titleTemplate: chunk => (chunk ? `${chunk} | Foxy` : 'Foxy'),
@@ -31,11 +27,18 @@
   })
 
   const pokeApi = usePokeApi()
-
   const refresh = useRefresh()
-  const signOut = useSignOut()
 
-  pokeApi._factory.beforeEach(refresh)
+  const credentials = useCredentialsStore()
+
+  pokeApi._factory // prettier stop it pls
+    .beforeEach(refresh)
+    .beforeEach(input => ({
+      ...input,
+      meta: {
+        accessToken: credentials.accessToken,
+      },
+    }))
 
   await refresh()
 </script>

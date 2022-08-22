@@ -1,18 +1,12 @@
-import {
-  useAccessToken,
-  useRefreshToken,
-  useTokenValidity,
-} from '~/composables/auth/auth-cookies'
+import { useCredentialsStore } from '~/_app/stores/credentials.store'
 
 export const useSignOut = () => {
-  const accessToken = useAccessToken()
-  const refreshToken = useRefreshToken()
-  const tokenValidity = useTokenValidity()
+  const credentials = useCredentialsStore()
 
   return async (navigate?: boolean) => {
-    accessToken.value = null
-    refreshToken.value = null
-    tokenValidity.value = null
+    credentials.accessToken = null
+    credentials.refreshToken = null
+    credentials.tokenValidity = null
 
     if (navigate) {
       if (typeof window !== 'undefined') {

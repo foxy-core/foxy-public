@@ -4,6 +4,7 @@ import {
 } from '~/_app/common/poke/poke-method'
 import { HttpMethod } from '~/_app/common/http-utils'
 import { PokeResponse } from './poke-response'
+import { PokeRequest } from './poke-request'
 
 export type PokeFactoryOptions = {
   baseUrl: string
@@ -25,20 +26,26 @@ export class PokeFactory {
 
   beforeEach(fn: CallableFunction) {
     this._beforeEach.add(fn)
+
+    return this
   }
 
   onError(fn: CallableFunction) {
     this._onError.add(fn)
+
+    return this
   }
 
   removeOnError(fn: CallableFunction) {
     this._onError.delete(fn)
   }
 
-  async _runBeforeEach() {
+  async _runBeforeEach<T>(input: PokeRequest<T>) {
     for await (const fn of this._beforeEach) {
-      await fn()
+      input = (await fn(input)) ?? input
     }
+
+    return input
   }
 
   async _runOnError<T>(response: PokeResponse<T>) {

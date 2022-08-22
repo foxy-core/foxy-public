@@ -14,7 +14,7 @@ export const definePokeMethod =
   <InputDTO, OutputDTO>(options: PokeMethodOptions) =>
   async (input: PokeRequest<InputDTO>): Promise<PokeResponse<OutputDTO>> => {
     try {
-      await options.before()
+      input = (await options.before(input)) ?? input
     } catch (e) {
       return null
     }
