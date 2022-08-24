@@ -2,6 +2,7 @@ import { createPokeFactory } from '~/_app/common/poke'
 
 import { createAuthMethods } from './auth'
 import { createProfileMethods } from './profile'
+import { createSchemaMethods } from './schema'
 
 export const createFoxyPokeClient = () => {
   const factory = createPokeFactory({
@@ -12,10 +13,12 @@ export const createFoxyPokeClient = () => {
 
   const auth = createAuthMethods(factory)
   const profile = createProfileMethods(factory)
+  const schema = createSchemaMethods(factory)
 
   return {
     _factory: factory,
     auth,
     profile,
+    schema,
   }
 }
